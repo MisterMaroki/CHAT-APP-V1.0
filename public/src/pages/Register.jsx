@@ -67,6 +67,30 @@ const FormContainer = styled.div`
 		img {
 			height: 5rem;
 		}
+		h1 {
+			color: white;
+			text-transform: uppercase;
+		}
+	}
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		background-color: #00000076;
+		border-radius: 2rem;
+		padding: 3rem 5rem;
+		input {
+			padding: 1rem;
+			background-color: transparent;
+			border: #00000076.1rem solid #4e0eff;
+			border-radius: 0.4rem;
+			color: white;
+			width: 100%;
+			font-size: 1rem;
+			&:focus {
+				border: 0.1rem solid #997af0;
+			}
+		}
 	}
 `;
 
