@@ -10,9 +10,18 @@ import { setAvatarRoute } from "../utils/APIRoutes";
 export default function SetAvatar() {
 	const api = "https://api.com.multiavatar.com/45678945";
 	const navigate = useNavigate();
+	const [avatars, setAvatars] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [SelectedAvatar, setSelectedAvatar] = useState(undefined);
+
 	return (
 		<>
-			<Container>setAvatar</Container>
+			<Container>
+				<div className="title-container">
+					<h1>Pick an avatar as your profile picture</h1>
+				</div>
+				<div className="avatars">{}</div>
+			</Container>
 			<ToastContainer />
 		</>
 	);
