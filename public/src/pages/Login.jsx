@@ -19,6 +19,12 @@ function Login() {
 		draggable: true,
 		theme: "dark",
 	};
+
+	useEffect(() => {
+		if (localStorage.getItem("chat-app-user")) {
+			navigate("/");
+		}
+	}, []);
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		if (handleValidation()) {
@@ -30,15 +36,16 @@ function Login() {
 			if (data.status === false) {
 				toast.error(data.msg, toastOptions);
 			}
-			if (data.status) {
+			if (data.status === true) {
 				localStorage.setItem("chat-app-user", JSON.stringify(data.user));
+
+				navigate("/");
 			}
-			navigate("/");
 		}
 	};
 
 	const handleValidation = () => {
-		const { password, confirmPassword, username, email } = values;
+		const { password, username } = values;
 		if (password === "") {
 			toast.error("username and password is required", toastOptions);
 			return false;
