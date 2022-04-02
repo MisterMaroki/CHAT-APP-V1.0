@@ -30,10 +30,15 @@ function Register() {
 			return false;
 		} else if (username.length < 3) {
 			toast.error("username must be longer than 3 characters", toastOptions);
+			return false;
 		} else if (password.length < 8) {
 			toast.error("password must be 8 characters or longer.", toastOptions);
 			return false;
+		} else if (email === "") {
+			toast.error("email is required", toastOptions);
+			return false;
 		}
+		return true;
 	};
 
 	const handleChange = (event) => {
