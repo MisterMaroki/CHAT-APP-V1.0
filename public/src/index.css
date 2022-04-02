@@ -11,3 +11,9 @@ button,
 input {
     font-family: 'Josefin Sans', sans-serif;
 }
+
+body {
+    max-height: 100vh;
+    maxw: 100vw;
+    overflow: hidden;
+}
