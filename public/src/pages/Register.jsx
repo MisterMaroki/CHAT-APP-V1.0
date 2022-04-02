@@ -11,22 +11,28 @@ function Register() {
 		password: "",
 		confirmPassword: "",
 	});
+	const toastOptions = {
+		position: "bottom-right",
+		autoClose: 8000,
+		pauseOnHover: true,
+		draggable: true,
+		theme: "dark",
+	};
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		handleValidation();
 	};
 
 	const handleValidation = () => {
-		const { password, confirmPassword, username, email } = setValues;
+		const { password, confirmPassword, username, email } = values;
 		if (password !== confirmPassword) {
-			alert("as");
-			toast.error("both passwords should be identical.", {
-				position: "bottom-right",
-				autoClose: 8000,
-				pauseOnHover: true,
-				draggable: true,
-				theme: "dark",
-			});
+			toast.error("both passwords should be identical.", toastOptions);
+			return false;
+		} else if (username.length < 3) {
+			toast.error("username must be longer than 3 characters", toastOptions);
+		} else if (password.length < 8) {
+			toast.error("password must be 8 characters or longer.", toastOptions);
+			return false;
 		}
 	};
 
