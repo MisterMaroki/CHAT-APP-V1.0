@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
+import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import { loginRoute } from "../utils/APIRoutes";
-function Login() {
+
+export default function Login() {
 	const navigate = useNavigate();
-	const [values, setValues] = useState({
-		username: "",
-		password: "",
-	});
+	const [values, setValues] = useState({ username: "", password: "" });
 	const toastOptions = {
 		position: "bottom-right",
 		autoClose: 8000,
@@ -19,16 +17,32 @@ function Login() {
 		draggable: true,
 		theme: "dark",
 	};
-
 	useEffect(() => {
-		if (localStorage.getItem("chat-app-user")) {
+		if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
 			navigate("/");
 		}
 	}, []);
+
+	const handleChange = (event) => {
+		setValues({ ...values, [event.target.name]: event.target.value });
+	};
+
+	const validateForm = () => {
+		const { username, password } = values;
+		if (username === "") {
+			toast.error("Email and Password is required.", toastOptions);
+			return false;
+		} else if (password === "") {
+			toast.error("Email and Password is required.", toastOptions);
+			return false;
+		}
+		return true;
+	};
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		if (handleValidation()) {
-			const { password, username } = values;
+		if (validateForm()) {
+			const { username, password } = values;
 			const { data } = await axios.post(loginRoute, {
 				username,
 				password,
@@ -37,34 +51,22 @@ function Login() {
 				toast.error(data.msg, toastOptions);
 			}
 			if (data.status === true) {
-				localStorage.setItem("chat-app-user", JSON.stringify(data.user));
+				localStorage.setItem(
+					process.env.REACT_APP_LOCALHOST_KEY,
+					JSON.stringify(data.user)
+				);
 
 				navigate("/");
 			}
 		}
 	};
 
-	const handleValidation = () => {
-		const { password, username } = values;
-		if (password === "") {
-			toast.error("username and password is required", toastOptions);
-			return false;
-		} else if (username.length === "") {
-			toast.error("username and password is required", toastOptions);
-			return false;
-		}
-		return true;
-	};
-
-	const handleChange = (event) => {
-		setValues({ ...values, [event.target.name]: event.target.value });
-	};
 	return (
 		<>
 			<FormContainer>
-				<form onSubmit={(event) => handleSubmit(event)}>
+				<form action="" onSubmit={(event) => handleSubmit(event)}>
 					<div className="brand">
-						<img src={Logo} alt="Logo" />
+						<img src={Logo} alt="logo" />
 						<h1>snappy</h1>
 					</div>
 					<input
@@ -80,10 +82,9 @@ function Login() {
 						name="password"
 						onChange={(e) => handleChange(e)}
 					/>
-
-					<button type="submit">Log in</button>
+					<button type="submit">Log In</button>
 					<span>
-						Don't have an account? <Link to="/register">Register</Link>
+						Don't have an account ? <Link to="/register">Create One.</Link>
 					</span>
 				</form>
 			</FormContainer>
@@ -120,46 +121,42 @@ const FormContainer = styled.div`
 		gap: 2rem;
 		background-color: #00000076;
 		border-radius: 2rem;
-		padding: 3rem 5rem;
-		input {
-			padding: 1rem;
-			background-color: transparent;
-			border: 0.1rem solid #4e0eff;
-			border-radius: 0.4rem;
-			color: white;
-			width: 100%;
-			font-size: 1rem;
-			&:focus {
-				border: 0.1rem solid #997af0;
-				outline: none;
-			}
+		padding: 5rem;
+	}
+	input {
+		background-color: transparent;
+		padding: 1rem;
+		border: 0.1rem solid #4e0eff;
+		border-radius: 0.4rem;
+		color: white;
+		width: 100%;
+		font-size: 1rem;
+		&:focus {
+			border: 0.1rem solid #997af0;
+			outline: none;
 		}
-		button {
-			background-color: #997af0;
-			color: white;
-			padding: 1rem 2rem;
-			border: none;
+	}
+	button {
+		background-color: #4e0eff;
+		color: white;
+		padding: 1rem 2rem;
+		border: none;
+		font-weight: bold;
+		cursor: pointer;
+		border-radius: 0.4rem;
+		font-size: 1rem;
+		text-transform: uppercase;
+		&:hover {
+			background-color: #4e0eff;
+		}
+	}
+	span {
+		color: white;
+		text-transform: uppercase;
+		a {
+			color: #4e0eff;
+			text-decoration: none;
 			font-weight: bold;
-			cursor: pointer;
-			border-radius: 0.4rem;
-			font-size: 1rem;
-			text-transform: uppercase;
-			transition: 0.5s ease-in-out;
-			&:hover {
-				background-color: #4e0eff;
-			}
-		}
-		span {
-			color: white;
-			text-transform: uppercase;
-			a {
-				color: #4e0eff;
-				text-transform: none;
-				font-weight: bold;
-				text-decoration: none;
-			}
 		}
 	}
 `;
-
-export default Login;
