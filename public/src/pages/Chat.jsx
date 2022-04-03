@@ -1,7 +1,19 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import styled from "styled-components";
-
+import axios from "axios";
+import{useNavigate} from 'react-router-dom'
 function Chat() {
+	const navigate = useNavigate()
+	const [contacts, setContacts] = useState([])
+	const[currentUser,setCurrentUser]=useState(undefined)
+	useEffect(async ()=>{
+		if (!localStorage.getItem("chat-app-user")) {
+			navigate("/login");
+		}
+	})
+	useEffect(async ()=>{
+		if()
+	},[])
 	return (
 		<Container>
 			<div className="container"></div>
@@ -24,7 +36,7 @@ const Container = styled.div`
 		display: grid;
 		grid-template-columns: 25% 75%;
 		@media screen and (min-width: 720px;) and (max-width:1080px) {
-		grid-template-columns:35% 65%;			
+		grid-template-columns:35% 65%;
 	}
 `;
 
