@@ -12,7 +12,7 @@ export default function ChatContainer({ currentChat, socket }) {
 	const [arrivalMessage, setArrivalMessage] = useState(null);
 
 	useEffect(() => {
-		async function anonUseEffect() {
+		async function anonFunc() {
 			const data = await JSON.parse(
 				localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
 			);
@@ -22,7 +22,7 @@ export default function ChatContainer({ currentChat, socket }) {
 			});
 			setMessages(response.data);
 		}
-		anonUseEffect();
+		anonFunc();
 	}, [currentChat]);
 
 	useEffect(() => {

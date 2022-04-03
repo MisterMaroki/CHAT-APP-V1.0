@@ -4,14 +4,14 @@ import Robot from "../assets/robot.gif";
 export default function Welcome() {
 	const [userName, setUserName] = useState("");
 	useEffect(() => {
-		async function anonUseEffect() {
+		async function anonFunc() {
 			setUserName(
 				await JSON.parse(
 					localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
 				).username
 			);
 		}
-		anonUseEffect();
+		anonFunc();
 	}, []);
 	return (
 		<Container>

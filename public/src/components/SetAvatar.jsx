@@ -22,11 +22,11 @@ export default function SetAvatar() {
 	};
 
 	useEffect(() => {
-		async function gety() {
+		async function anonFunc() {
 			if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY))
 				navigate("/login");
 		}
-		gety();
+		anonFunc();
 	}, []);
 
 	const setProfilePicture = async () => {

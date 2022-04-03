@@ -37,7 +37,7 @@ export default function Chat() {
 	}, [currentUser]);
 
 	useEffect(() => {
-		async function isTher() {
+		async function anonFunc() {
 			if (currentUser) {
 				if (currentUser.isAvatarImageSet) {
 					const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
@@ -47,7 +47,7 @@ export default function Chat() {
 				}
 			}
 		}
-		isTher();
+		anonFunc();
 	}, [currentUser]);
 	const handleChatChange = (chat) => {
 		setCurrentChat(chat);
