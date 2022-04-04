@@ -5,6 +5,7 @@ const authRoutes = require("./routes/auth");
 const messageRoutes = require("./routes/messages");
 const app = express();
 const socket = require("socket.io");
+const path = require("path");
 require("dotenv").config();
 
 app.use(cors());
@@ -34,6 +35,13 @@ const io = socket(server, {
 		credentials: true,
 	},
 });
+
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static("public/build"));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "public", "build", "index.html"));
+	});
+}
 
 global.onlineUsers = new Map();
 io.on("connection", (socket) => {
